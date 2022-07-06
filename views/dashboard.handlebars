@@ -1,0 +1,19 @@
+<div class="w3-bar w3-black">
+
+  <a class="w3-bar-item w3-button w3-mobile" href="#">Create Post</a>
+
+</div>
+
+{{#if posts.length}}
+<div>
+
+  <h2 class="w3-text-dark-grey">Your Posts</h2>
+
+  {{#each posts as |post|}}
+  {{> post-info}}
+  {{/each}}
+
+</div>
+{{/if}}
+
+<script src="/js/create-post.js"></script>

@@ -1,0 +1,11 @@
+{{#each this}}
+<div class="w3-card-4 w3-round-xlarge comments" style="width:50%;">
+    <header class="w3-container w3-gray">
+        <h4>{{user.username}} commented on {{format_date date_created}}</h4>
+    </header>
+
+    <div class="w3-container">
+        <p>{{content}}</p>
+    </div>
+</div>
+{{/each}}

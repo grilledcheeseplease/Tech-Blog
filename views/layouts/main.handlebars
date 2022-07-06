@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talking Tech</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+
+
+<header class="w3-container w3-theme w3-padding" id="myHeader">
+  <div class="w3-center">
+    <h1 class="w3-xxxlarge w3-animate-bottom">Talking Tech Blog</h1>
+    <nav class="w3-bar w3-black">
+      {{#if loggedIn}}
+      <a href="/">Homepage</a>
+      <a href="/dashboard" class="w3-bar-item w3-button w3-mobile">Dashboard</a>
+      <a href="/dashboard/create/" class="w3-bar-item w3-button w3-mobile">Create Post</a>
+      <button id="logout" class="w3-btn w3-small w3-dark-grey w3-hover-light-grey"
+        style="font-weight:900;">Logout</button>
+      {{else}}
+      <a href="/" class="w3-bar-item w3-button w3-mobile">Homepage</a>
+      <a href="/login"class="w3-bar-item w3-button w3-mobile">Login</a>
+      {{/if}}
+    </nav>
+  </div>
+</header>
+
+<main>
+  {{{ body }}}
+</main>
+
+<footer>
+  <div>
+    <p>
+      <a href="/" class="w3-bar-item w3-button w3-mobile">Homepage</a>
+      {{#if loggedIn}} |
+      <a href="/dashboard/" class="w3-bar-item w3-button w3-mobile">Dashboard</a> |
+      <a href="/dashboard/create/" class="w3-bar-item w3-button w3-mobile">Create New Post</a>
+      {{else}}
+      | <a href="/login" class="w3-bar-item w3-button w3-mobile">Login</a>
+      {{/if}}
+    </p>
+  </div>
+</footer>
+
+
+{{#if loggedIn}}
+<script src="/js/logout.js"></script>
+{{/if}}
+</body>
+
+</html>

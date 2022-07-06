@@ -1,0 +1,21 @@
+<div class="w3-card-4 w3-round-xlarge" style="width:50%;">
+    <header class="w3-container w3-gray">
+        <h2><a class="w3-bar-item w3-button w3-mobile" href="/posts/{{id}}">{{title}}</a></h2>
+        <h4>{{user.username}} posted on {{format_date date_created}}</h4>
+    </header>
+
+    <div class="w3-container">
+        <p>{{content}}</p>
+    </div>
+    {{#if loggedIn}}
+    <footer class="w3-container w3-gray">
+        <h5><a class="w3-bar-item w3-button w3-mobile" href="/dashboard/edit/{{id}}">Edit: {{title}}</a></h5>
+        <p><button class="w3-btn w3-black delete-post-btn" type="submit">Delete Post</button></p>
+    </footer>
+    {{/if}}
+</div>
+
+{{#if loggedIn}}
+<script src="/public/js/edit-post.js"></script>
+<script src="/public/js/delete-post.js"></script>
+{{/if}}
