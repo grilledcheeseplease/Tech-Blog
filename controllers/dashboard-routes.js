@@ -9,7 +9,7 @@ const serialize = (data) => JSON.parse(JSON.stringify(data));
 // GET all Posts for dashboard
 router.get('/', withAuth, async (req, res) => {
     try {
-        const postData = await Post.findAll({ 
+        const postsData = await Post.findAll({ 
             where: { 
                 user_id: req.session.user_id 
             },
@@ -31,7 +31,7 @@ router.get('/', withAuth, async (req, res) => {
             ] 
         });
 
-        const posts = serialize(postData);
+        const posts = serialize(postsData);
         res.render('dashboard', { posts, loggedIn: true });
 
     } catch (err) {
@@ -43,7 +43,7 @@ router.get('/', withAuth, async (req, res) => {
 // edit Post
 router.get('/edit/:id', withAuth, async (req, res) => {
     try {
-        const postData = await Post.findByPk(req.params.id, {
+        const postsData = await Post.findByPk(req.params.id, {
             attributes: {
                 exclude: ['user_id']
             },
@@ -62,12 +62,12 @@ router.get('/edit/:id', withAuth, async (req, res) => {
             ]
         });
 
-        if (!postData) {
+        if (!postsData) {
             res.status(404).json({ message: 'No post with this id' });
             return;
         }
 
-        const post = serialize(postData);
+        const post = postsData.get({ plain: true });
         res.render('edit-post', { post, loggedIn: true });
 
     } catch (err) {
@@ -76,36 +76,9 @@ router.get('/edit/:id', withAuth, async (req, res) => {
     }
 });
 
-// created Post for dashboard
-router.get('/create/', withAuth, async (req, res) => {
-    try {
-        const postData = await Post.findAll({
-            where: { user_id: req.session.user_id },
-            attributes: {
-                exclude: ['user_id']
-            },
-            include: [
-                {
-                    model: Comment,
-                    include: {
-                        model: User,
-                        attributes: ['username']
-                    }
-                },
-                {
-                    model: User,
-                    attributes: ['username']
-                }
-            ]
-        });
-
-        const posts = serialize(postData);
-        res.render('create-post', { posts, loggedIn: true });
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
+// created posts on dashboard
+router.get('/new', withAuth, (req, res) => {
+    res.render('new-post');
 });
 
 module.exports = router;

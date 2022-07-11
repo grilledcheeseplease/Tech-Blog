@@ -3,7 +3,7 @@
 {{#if loggedIn}}
 <div class="w3-row-padding">
 
-  <form class="w3-panel w3-card-4 comment-form" action="/action_page.php">
+  <form id="comment-form" class="w3-panel w3-card-4" action="/js/comment.js">
     <h2>Comment</h2>
 
     
@@ -17,5 +17,5 @@
 {{> comments post.comments}}
 
 {{#if loggedIn}}
-<script src="/public/js/comment.js"></script>
+<script src="/js/comment.js"></script>
 {{/if}}

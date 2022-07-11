@@ -16,13 +16,13 @@
     <h1 class="w3-xxxlarge w3-animate-bottom">Talking Tech Blog</h1>
     <nav class="w3-bar w3-black">
       {{#if loggedIn}}
-      <a href="/">Homepage</a>
+      <a href="/" class="w3-bar-item w3-button w3-mobile">Homepage</a>
       <a href="/dashboard" class="w3-bar-item w3-button w3-mobile">Dashboard</a>
       <a href="/dashboard/create/" class="w3-bar-item w3-button w3-mobile">Create Post</a>
-      <button id="logout" class="w3-btn w3-small w3-dark-grey w3-hover-light-grey"
+      <button id="logout" class="w3-bar-item w3-button w3-mobile"
         style="font-weight:900;">Logout</button>
       {{else}}
-      <a href="/" class="w3-bar-item w3-button w3-mobile">Homepage</a>
+      <a href="/dashboard" class="w3-bar-item w3-button w3-mobile">Dashboard</a>
       <a href="/login"class="w3-bar-item w3-button w3-mobile">Login</a>
       {{/if}}
     </nav>
@@ -33,24 +33,8 @@
   {{{ body }}}
 </main>
 
-<footer>
-  <div>
-    <p>
-      <a href="/" class="w3-bar-item w3-button w3-mobile">Homepage</a>
-      {{#if loggedIn}} |
-      <a href="/dashboard/" class="w3-bar-item w3-button w3-mobile">Dashboard</a> |
-      <a href="/dashboard/create/" class="w3-bar-item w3-button w3-mobile">Create New Post</a>
-      {{else}}
-      | <a href="/login" class="w3-bar-item w3-button w3-mobile">Login</a>
-      {{/if}}
-    </p>
-  </div>
-</footer>
-
-
 {{#if loggedIn}}
 <script src="/js/logout.js"></script>
 {{/if}}
-</body>
 
 </html>

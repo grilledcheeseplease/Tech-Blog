@@ -4,12 +4,12 @@ const { User, Post, Comment } = require('../../models');
 // GET all Users
 router.get('/', async (req, res) => {
     try {
-        const userData = await User.findAll({ 
+        const usersData = await User.findAll({ 
             attributes: { 
                 exclude: ['password'] 
             }
         });
-        res.status(200).json(userData); 
+        res.status(200).json(usersData); 
     } catch (err) {
         res.status(500).json(err);
     }
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 // GET a single User
 router.get('/:id', async (req, res) => {
     try {
-        const userData = await User.findByPk(req.params.id, {
+        const usersData = await User.findByPk(req.params.id, {
             include: [
                 {
                     model: Post,
@@ -35,12 +35,12 @@ router.get('/:id', async (req, res) => {
             ],
         });
         
-        if (!userData) {
+        if (!usersData) {
             res.status(404).json({ message: 'No user with this id' });
             return;
         }
 
-        res.json(userData);
+        res.json(usersData);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -50,14 +50,14 @@ router.get('/:id', async (req, res) => {
 // create User
 router.post('/', async (req, res) => {
     try {
-        const userData = await User.create(req.body);
+        const usersData = await User.create(req.body);
 
         req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.username = userData.username;
-            req.session.logged_in = true;
+            req.session.user_id = usersData.id;
+            req.session.username = usersData.username;
+            req.session.loggedIn = true;
 
-            res.status(200).json(userData);
+            res.status(200).json(usersData);
         });
         
     } catch (err) {
@@ -68,14 +68,14 @@ router.post('/', async (req, res) => {
 // User login
 router.post('/login', async (req, res) => {
     try {
-        const userData = await User.findOne({ where: { username: req.body.username } });
+        const usersData = await User.findOne({ where: { username: req.body.username } });
 
-        if (!userData) {
+        if (!usersData) {
             res.status(400).json({ message: 'Incorrect username or password, please try again' });
             return;
         }
 
-        const validPassword = await userData.checkPassword(req.body.password);
+        const validPassword = await usersData.checkPassword(req.body.password);
 
         if (!validPassword) {
             res.status(400).json({ message: 'Incorrect username or password, please try again' });
@@ -83,11 +83,11 @@ router.post('/login', async (req, res) => {
         }
 
         req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.username = userData.username;
-            req.session.logged_in = true;
+            req.session.user_id = usersData.id;
+            req.session.username = usersData.username;
+            req.session.loggedIn = true;
 
-            res.json({ user: userData, message: 'You are now logged in!' });
+            res.json({ user: usersData, message: 'You are now logged in!' });
         });
 
     } catch (err) {
@@ -97,7 +97,7 @@ router.post('/login', async (req, res) => {
 
 // User logout
 router.post('/logout', (req, res) => {
-    if (req.session.logged_in) {
+    if (req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end();
         });
@@ -109,17 +109,17 @@ router.post('/logout', (req, res) => {
 // User update
 router.put('/:id', async (req, res) => {
     try {
-        const userData = await User.update(req.body, {
+        const usersData = await User.update(req.body, {
             individualHooks: true,
             where: { id: req.params.id}
         });
 
-        if (!userData[0]) {
+        if (!usersData[0]) {
             res.status(404).json({ message: 'No user with this id' });
             return;
         }
 
-        res.status(200).json(userData);
+        res.status(200).json(usersData);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -129,18 +129,18 @@ router.put('/:id', async (req, res) => {
 // User DELETE 
 router.delete('/:id', async (req, res) => {
     try {
-        const userData = await User.destroy({
+        const usersData = await User.destroy({
             where: {
                 id: req.params.id,
             },
         });
 
-        if (!userData) {
+        if (!usersData) {
             res.status(404).json({ message: 'No user with this id' });
             return;
         };
 
-        res.status(200).json(userData);
+        res.status(200).json(usersData);
     } catch (err) {
         res.status(500).json(err);
     }

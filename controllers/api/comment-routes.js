@@ -5,8 +5,8 @@ const withAuth = require('../../utils/auth');
 // GET all Comments
 router.get('/', async (req, res) => {
     try {
-        const commentData = await Comment.findAll({});
-        res.status(200).json(commentData);
+        const commentsData = await Comment.findAll({});
+        res.status(200).json(commentsData);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 // GET a single Comment
 router.get('/:id', async (req, res) => {
     try {
-        const commentData = await Comment.findByPk(req.params.id);
-        res.status(200).json(commentData);
+        const commentsData = await Comment.findByPk(req.params.id);
+        res.status(200).json(commentsData);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -27,14 +27,14 @@ router.get('/:id', async (req, res) => {
 // create Comment
 router.post('/', withAuth, async (req, res) => {
     try {
-        const commentData = await Comment.create({
+        const commentsData = await Comment.create({
             date_created: req.body.date_created,
             content: req.body.content,
             post_id: req.body.post_id,
             user_id: req.session.user_id
         });
 
-        res.status(200).json(postData);
+        res.status(200).json(commentsData);
     } catch (err) {
         console.log(err);
         res.status(400).json(err);
@@ -44,16 +44,16 @@ router.post('/', withAuth, async (req, res) => {
 // update Comment
 router.put('/:id', withAuth, async (req, res) => {
     try {
-        const commentData = await Comment.update(req.params.id, {
+        const commentsData = await Comment.update(req.params.id, {
             content: req.body.content
         });
 
-        if (!commentData) {
+        if (!commentsData) {
             res.status(404).json({ message: 'No comment with this id' });
             return;
         }
 
-        res.status(200).json(postData);
+        res.status(200).json(commentsData);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -63,14 +63,14 @@ router.put('/:id', withAuth, async (req, res) => {
 // DELETE Comment
 router.delete('/:id', withAuth, async (req, res) => {
     try {
-        const commentData = await Comment.destroy({ where: req.params.id });
+        const commentsData = await Comment.destroy({ where: req.params.id });
 
-        if (!commentData) {
+        if (!commentsData) {
             res.status(404).json({ message: 'No comment with this id' });
             return;
         }
 
-        res.status(200).json(postData);
+        res.status(200).json(commentsData);
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

@@ -9,7 +9,7 @@ const serialize = (data) => JSON.parse(JSON.stringify(data));
 // GET all posts for homepage
 router.get('/', async (req, res) => {
     try {
-        const postData = await Post.findAll({
+        const postsData = await Post.findAll({
             attributes: {exclude: ['user_id']},
             include: [
                 {
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
             ]
         });
 
-        const posts = serialize(postData);
+        const posts = serialize(postsData);
         res.render('homepage', { posts, loggedIn: req.session.loggedIn });
 
     } catch (err) {
@@ -38,7 +38,7 @@ router.get('/', async (req, res) => {
 // User login
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/');
+        res.redirect('/homepage');
         return;
     }
     res.render('login');
@@ -47,7 +47,7 @@ router.get('/login', (req, res) => {
 // GET a single Post
 router.get('/:id', withAuth, async (req, res) => {
     try {
-        const postData = await Post.findByPk(req.params.id, {
+        const postsData = await Post.findByPk(req.params.id, {
             attributes: {exclude: ['user_id']},
             include: [
                 {
@@ -64,12 +64,12 @@ router.get('/:id', withAuth, async (req, res) => {
             ]
         });
 
-        if (!postData) {
+        if (!postsData) {
             res.status(404).json({ message: 'No post with this id' });
             return;
         }
 
-        const post = serialize(postData);
+        const post = serialize(postsData);
         res.render('single-post', { post, loggedIn: req.session.loggedIn });
 
     } catch (err) {

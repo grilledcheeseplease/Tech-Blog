@@ -7,7 +7,8 @@
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "node server.js",
       "seed": "node seeds/seed.js",
-      "preseed": "node config/init.js"
+      "preseed": "node config/init.js",
+      "lint:fix": "npx eslint **/*.js --fix"
     },
     "keywords": [],
     "author": "",
