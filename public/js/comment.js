@@ -3,7 +3,7 @@ const commentFormHandler = async (event) => {
 
   const content = document
     .querySelector('#comment-form')
-    .value.trim();
+    .value;
   const post_id = window.location.toString().split('/')[
     window.location.toString().split('/').length - 1
   ];
@@ -22,6 +22,7 @@ const commentFormHandler = async (event) => {
 
     if (response.ok) {
       document.location.reload();
+
     } else {
       alert(response.statusText);
       document.querySelector('#comment-input').style.display = 'block';
@@ -30,5 +31,5 @@ const commentFormHandler = async (event) => {
 };
 
 document
-  .querySelector('.comment-form')
+  .querySelector('#comment-form')
   .addEventListener('submit', commentFormHandler);

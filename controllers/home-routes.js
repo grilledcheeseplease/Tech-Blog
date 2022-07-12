@@ -10,6 +10,7 @@ const serialize = (data) => JSON.parse(JSON.stringify(data));
 router.get('/', async (req, res) => {
     try {
         const postsData = await Post.findAll({
+           
             attributes: {exclude: ['user_id']},
             include: [
                 {
@@ -45,7 +46,7 @@ router.get('/login', (req, res) => {
 });
 
 // GET a single Post
-router.get('/:id', withAuth, async (req, res) => {
+router.get('/posts/:id', withAuth, async (req, res) => {
     try {
         const postsData = await Post.findByPk(req.params.id, {
             attributes: {exclude: ['user_id']},

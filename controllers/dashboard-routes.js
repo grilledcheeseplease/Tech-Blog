@@ -9,9 +9,9 @@ const serialize = (data) => JSON.parse(JSON.stringify(data));
 // GET all Posts for dashboard
 router.get('/', withAuth, async (req, res) => {
     try {
-        const postsData = await Post.findAll({ 
-            where: { 
-                user_id: req.session.user_id 
+        const postsData = await Post.findAll({
+            where: {
+                user_id: req.session.user_id
             },
             attributes: {
                 exclude: ['user_id']
@@ -28,7 +28,7 @@ router.get('/', withAuth, async (req, res) => {
                     model: User,
                     attributes: ['username']
                 }
-            ] 
+            ]
         });
 
         const posts = serialize(postsData);
@@ -77,8 +77,36 @@ router.get('/edit/:id', withAuth, async (req, res) => {
 });
 
 // created posts on dashboard
-router.get('/new', withAuth, (req, res) => {
-    res.render('new-post');
+router.get('/create/', withAuth, async (req, res) => {
+    try {
+        res.render('new-post');
+        const postData = await Post.findAll({
+            where: { user_id: req.session.user_id },
+            attributes: {
+                exclude: ['user_id']
+            },
+            include: [
+                {
+                    model: Comment,
+                    include: {
+                        model: User,
+                        attributes: ['username']
+                    }
+                },
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
+
+        const posts = serialize(postData);
+        res.render('homepage', { posts, loggedIn: true });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 });
 
 module.exports = router;
