@@ -1,8 +1,8 @@
 const commentFormHandler = async (event) => {
   event.preventDefault();
-
+  
   const content = document
-    .querySelector('#comment-form')
+    .querySelector('#comment-input')
     .value;
   const post_id = window.location.toString().split('/')[
     window.location.toString().split('/').length - 1
@@ -19,7 +19,7 @@ const commentFormHandler = async (event) => {
         'Content-Type': 'application/json',
       },
     });
-
+    
     if (response.ok) {
       document.location.reload();
 

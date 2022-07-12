@@ -16,5 +16,5 @@ You will need to sign up to login and you will need to be logged in to access ex
 ![Talking Tech Blog](/public/assets/images/Screenshot%202022-07-11%20213642.png)
 
 ## Resources
-- [Heroku Site]()
+- [Heroku Site](https://vast-basin-72683.herokuapp.com/)
 - [Repository](https://github.com/grilledcheeseplease/Tech-Blog)
