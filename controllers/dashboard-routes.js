@@ -79,30 +79,8 @@ router.get('/edit/:id', withAuth, async (req, res) => {
 // created posts on dashboard
 router.get('/create', withAuth, async (req, res) => {
     try {
+      return res.render('new-post', { loggedIn: req.session.loggedIn });
         
-        const postData = await Post.findAll({
-            where: { user_id: req.session.user_id },
-            attributes: {
-                exclude: ['user_id']
-            },
-            include: [
-                {
-                    model: Comment,
-                    include: {
-                        model: User,
-                        attributes: ['username']
-                    }
-                },
-                {
-                    model: User,
-                    attributes: ['username']
-                }
-            ]
-        });
-
-        const posts = serialize(postData);
-        return res.render('homepage', { posts, loggedIn: true });
-
     } catch (err) {
         console.log(err);
         return res.status(500).json(err);
