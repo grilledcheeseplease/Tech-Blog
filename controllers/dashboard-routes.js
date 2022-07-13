@@ -77,9 +77,9 @@ router.get('/edit/:id', withAuth, async (req, res) => {
 });
 
 // created posts on dashboard
-router.get('/create/', withAuth, async (req, res) => {
+router.get('/create', withAuth, async (req, res) => {
     try {
-        res.render('new-post');
+        
         const postData = await Post.findAll({
             where: { user_id: req.session.user_id },
             attributes: {
@@ -101,11 +101,11 @@ router.get('/create/', withAuth, async (req, res) => {
         });
 
         const posts = serialize(postData);
-        res.render('homepage', { posts, loggedIn: true });
+        return res.render('homepage', { posts, loggedIn: true });
 
     } catch (err) {
         console.log(err);
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 });
 
