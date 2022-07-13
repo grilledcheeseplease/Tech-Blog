@@ -94,10 +94,10 @@ router.put('/:id', withAuth, async (req, res) => {
             return;
         }
 
-        res.status(200).json(postsData);
+       return res.status(200).json(postsData);
     } catch (err) {
         console.log(err);
-        res.status(500).json(err);
+        return res.status(500).json(err);
     }
 });
 
